@@ -27,4 +27,5 @@ def ext():
 
 if __name__ == '__main__':
     print("Starting up at port:" + str(port))
+    os.chmod("./extproc", 0o755)
     app.run(host='0.0.0.0', port=port)
