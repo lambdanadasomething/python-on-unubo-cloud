@@ -19,5 +19,5 @@ def ver():
     return sys.version
 
 if __name__ == '__main__':
-    print("Starting up at port:" + port)
+    print("Starting up at port:" + str(port))
     app.run(host='0.0.0.0', port=port)
