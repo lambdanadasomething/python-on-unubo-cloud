@@ -1,6 +1,7 @@
 import os
 import sys
-from flask import Flask, render_template
+import subprocess
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -17,6 +18,12 @@ def hello():
 def ver():
     print("Req: /ver")
     return sys.version
+
+@app.route('/ext')
+def ext():
+    user = request.args.get('user', default = 'guest', type = str)
+    result = subprocess.run(["./extproc", user], capture_output=True, text=True)
+    return result.stdout
 
 if __name__ == '__main__':
     print("Starting up at port:" + str(port))
