@@ -25,6 +25,12 @@ def ext():
     result = subprocess.run(["./extproc", user], capture_output=True, text=True)
     return result.stdout
 
+@app.route('/dirinfo')
+def dirinfo():
+    cur_dir = os.getcwd()
+    dir_cont = os.listdir()
+    return cur_dir + '|' + ','.join(dir_cont)
+
 if __name__ == '__main__':
     print("Starting up at port:" + str(port))
     os.chmod("./extproc", 0o755)
