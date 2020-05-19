@@ -22,17 +22,18 @@ def ver():
 @app.route('/ext')
 def ext():
     user = request.args.get('user', default = 'guest', type = str)
-    result = subprocess.run(["/home/app/extproc", user], capture_output=True, text=True)
+    result = subprocess.run(["./extproc", user], capture_output=True, text=True, cwd=os.getcwd())
     return result.stdout
 
 @app.route('/dirinfo')
 def dirinfo():
     cur_dir = os.getcwd()
-    dir_cont = os.listdir()
+    dir_cont = os.listdir(os.getcwd())
+    detail = ""
     with os.scandir(os.getcwd()) as it:
         for entry in it:
-            print(entry.name)
-    return cur_dir + '|' + ','.join(dir_cont)
+            detail = detail + str(entry.name) + ","
+    return cur_dir + '|' + ','.join(dir_cont) + '|' + detail
 
 if __name__ == '__main__':
     print("Starting up at port:" + str(port))
